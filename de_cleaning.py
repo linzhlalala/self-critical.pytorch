@@ -47,36 +47,50 @@ def dcm_info(ds):
 
 def main(output_folder):
     freport = '/media/hdd/data/imcaption/FAsample/sample.csv'
+    folder_path = '/media/hdd/data/imcaption/FAsample' # the folder storing csv
     reportlist = pd.read_csv(freport, encoding='gb18030')
 
     table = []
     for index, row in reportlist.iterrows():
         id = row['id']
-        print(id)
+        # print(id)
         finding = row['Findings']
+        # print('finding', finding)
         impression = row['Impression']
+        # print('impression', impression)
 
-        folder = os.walk(id)
-        # print(folder)
+        id_folder_path = os.path.join(folder_path, id)
+        folder = os.walk(id_folder_path)
+        print(id_folder_path)
+        id_folder_path_deid = id_folder_path + '_deid'
+        print(id_folder_path_deid)
+        if not os.path.exists(id_folder_path_deid):
+            os.makedirs(id_folder_path_deid)
         for path, dir_list, file_list in folder:
+            # print(path, dir_list, file_list)
             save_to_path = os.path.join(output_folder, path)
             if not os.path.exists(save_to_path):
                 os.makedirs(save_to_path)
             for idx, dcm_file in enumerate(file_list):
                 dcm_filepath = os.path.join(path, dcm_file)
                 ds = dcmread(dcm_filepath)
+
+                before_deientify = dcm_info(ds)
+                # print(before_deientify)
                 dcm_deid(ds)
                 dcm_dict = dcm_info(ds)
                 dcm_dict['studyid'] = id
                 dcm_dict['imgid'] = dcm_file.replace('.dcm', '')
                 dcm_dict['filepath'] = dcm_filepath
                 table.append(dcm_dict)
-
+                # print(dcm_dict)
                 # save_to_path = os.path.join(output_folder,path)
                 # ds.save_as(save_to_file)
-
+                dicom_save_path = id_folder_path_deid + os.sep + dcm_file
+                ds.save_as(dicom_save_path)
         if index == 500:
             break
+    print(ds)
 
     csv_file = "infos.csv"
     with open(csv_file, 'w', newline='', encoding='utf-8') as csvfile:

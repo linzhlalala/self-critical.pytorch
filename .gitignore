@@ -7,3 +7,5 @@ captioning/utils/__pycache__/
 data/*
 logs/*
 eval_results
+.idea/*
+infos.csv

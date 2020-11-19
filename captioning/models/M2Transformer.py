@@ -31,8 +31,8 @@ from .TransformerModel import subsequent_mask, TransformerModel
 
 class M2TransformerModel(TransformerModel):
 
-    def make_model(self, src_vocab, tgt_vocab, N_enc=6, N_dec=6, 
-               d_model=512, d_ff=2048, h=8, dropout=0.1):
+    def make_model(self, src_vocab, tgt_vocab, N_enc=6, N_dec=6,
+                   d_model=512, d_ff=2048, h=8, dropout=0.1):
         "Helper: Construct a model from hyperparameters."
         encoder = MemoryAugmentedEncoder(N_enc, 0, attention_module=ScaledDotProductAttentionMemory,
                                          attention_module_kwargs={'m': 40})

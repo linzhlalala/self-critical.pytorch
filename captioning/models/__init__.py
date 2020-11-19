@@ -12,10 +12,12 @@ from .ShowTellModel import ShowTellModel
 from .FCModel import FCModel
 from .AttModel import *
 from .TransformerModel import TransformerModel
+from .M2Transformer_local import M2TransformerModel_local
 from .cachedTransformer import TransformerModel as cachedTransformer
 from .BertCapModel import BertCapModel
 from .M2Transformer import M2TransformerModel
 from .AoAModel import AoAModel
+
 
 def setup(opt):
     if opt.caption_model in ['fc', 'show_tell']:
@@ -67,6 +69,8 @@ def setup(opt):
         model = BertCapModel(opt)
     elif opt.caption_model == 'm2transformer':
         model = M2TransformerModel(opt)
+    elif opt.caption_model == 'm2transformer_local':
+        model = M2TransformerModel_local(opt)
     else:
         raise Exception("Caption model not supported: {}".format(opt.caption_model))
 

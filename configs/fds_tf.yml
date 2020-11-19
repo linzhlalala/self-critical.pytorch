@@ -5,7 +5,6 @@ input_att_dir: data/findings_att
 input_fc_dir: data/findings_fc
 input_label_h5: data/findings_label.h5
 learning_rate: 0.0005
-learning_rate_decay_start: 0
 scheduled_sampling_start: 0
 checkpoint_path: logs/log_fds_tf
 # $start_from

@@ -35,7 +35,7 @@ class M2TransformerModel(TransformerModel):
                d_model=512, d_ff=2048, h=8, dropout=0.1):
         "Helper: Construct a model from hyperparameters."
         encoder = MemoryAugmentedEncoder(N_enc, 0, attention_module=ScaledDotProductAttentionMemory,
-                                        attention_module_kwargs={'m': 40})
+                                         attention_module_kwargs={'m': 40})
         # Another implementation is to use MultiLevelEncoder + att_embed
         decoder = MeshedDecoder(tgt_vocab, 54, N_dec, -1) # -1 is padding;
         model = Transformer(0, encoder, decoder) # 0 is bos

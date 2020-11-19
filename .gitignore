@@ -9,3 +9,4 @@ logs/*
 eval_results
 .idea/*
 infos.csv
+log_m2tf/

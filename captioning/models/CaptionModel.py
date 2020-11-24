@@ -30,9 +30,12 @@ class CaptionModel(nn.Module):
         mode = kwargs.get('mode', 'forward')
         if 'mode' in kwargs:
             del kwargs['mode']
+        print('mode inside CaptionModel Class', mode)
         return getattr(self, '_'+mode)(*args, **kwargs)
 
     def beam_search(self, init_state, init_logprobs, *args, **kwargs):
+        print('beam search of caption')
+        print(xxx)
 
         # function computes the similarity score to be augmented
         def add_diversity(beam_seq_table, logprobs, t, divm, diversity_lambda, bdash):
@@ -207,6 +210,7 @@ class CaptionModel(nn.Module):
         return done_beams
 
     def old_beam_search(self, init_state, init_logprobs, *args, **kwargs):
+        print(old_beam_search_function)
 
         # function computes the similarity score to be augmented
         def add_diversity(beam_seq_table, logprobsf, t, divm, diversity_lambda, bdash):
@@ -364,6 +368,9 @@ class CaptionModel(nn.Module):
         return done_beams
 
     def sample_next_word(self, logprobs, sample_method, temperature):
+        # print(sample_next_word)
+        # print(self.generator)
+        print('sample_next_word function inside CaptionModel Class')
         if sample_method == 'greedy':
             sampleLogprobs, it = torch.max(logprobs.data, 1)
             it = it.view(-1).long()
@@ -404,4 +411,5 @@ class CaptionModel(nn.Module):
 
 
     def decode_sequence(self, seq):
+        print('decode_sequence')
         return utils.decode_sequence(self.vocab, seq)

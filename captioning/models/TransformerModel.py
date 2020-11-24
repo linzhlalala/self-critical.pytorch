@@ -259,6 +259,8 @@ class TransformerModel(AttModel):
         return model
 
     def __init__(self, opt):
+        print('TransformerModel')
+        # print(xxx)
         super(TransformerModel, self).__init__(opt)
         self.opt = opt
         # self.config = yaml.load(open(opt.config_file))
@@ -297,6 +299,7 @@ class TransformerModel(AttModel):
             dropout=self.dropout)
 
     def logit(self, x): # unsafe way
+        print(logits)
         return self.model.generator.proj(x)
 
     def init_hidden(self, bsz):
@@ -343,7 +346,7 @@ class TransformerModel(AttModel):
         att_feats, seq, att_masks, seq_mask = self._prepare_feature_forward(att_feats, att_masks, seq)
 
         out = self.model(att_feats, seq, att_masks, seq_mask)
-
+        print('the size of out TransformerModel', out.size())
         outputs = self.model.generator(out)
         return outputs
         # return torch.cat([_.unsqueeze(1) for _ in outputs], 1)
@@ -352,6 +355,7 @@ class TransformerModel(AttModel):
         """
         state = [ys.unsqueeze(0)]
         """
+        print(core)
         if len(state) == 0:
             ys = it.unsqueeze(1)
         else:

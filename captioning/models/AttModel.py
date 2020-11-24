@@ -165,8 +165,12 @@ class AttModel(CaptionModel):
     def get_logprobs_state(self, it, fc_feats, att_feats, p_att_feats, att_masks, state, output_logsoftmax=1):
         # 'it' contains a word index
         xt = self.embed(it)
-
+        # print(self_core)
+        # print('it', it.size(), 'xt', xt.size())
+        # print(xxxxx)
+        print('get_logprobs_state function inside AttModel Class')
         output, state = self.core(xt, fc_feats, att_feats, p_att_feats, state, att_masks)
+        # print('output', output.size())
         if output_logsoftmax:
             logprobs = F.log_softmax(self.logit(output), dim=1)
         else:
@@ -255,7 +259,7 @@ class AttModel(CaptionModel):
         return seq, seqLogprobs
 
     def _sample(self, fc_feats, att_feats, att_masks=None, opt={}):
-
+        print('_sample function of AttModel')
         sample_method = opt.get('sample_method', 'greedy')
         beam_size = opt.get('beam_size', 1)
         temperature = opt.get('temperature', 1.0)
@@ -287,7 +291,7 @@ class AttModel(CaptionModel):
         for t in range(self.seq_length + 1):
             if t == 0: # input <bos>
                 it = fc_feats.new_full([batch_size*sample_n], self.bos_idx, dtype=torch.long)
-
+            # print('output_logsoftmax', output_logsoftmax)
             logprobs, state = self.get_logprobs_state(it, p_fc_feats, p_att_feats, pp_att_feats, p_att_masks, state, output_logsoftmax=output_logsoftmax)
             
             if decoding_constraint and t > 0:

@@ -26,11 +26,12 @@ class Transformer(CaptioningModel):
                 nn.init.xavier_uniform_(p)
 
     def forward(self, images, seq, *args):
-        print('images', images.size())
+        # print('images', images.size())
         enc_output, mask_enc = self.encoder(images)
-        print('seq', seq.size(), 'enc_output', enc_output.size(), 'mask_enc', mask_enc.size())
+        # print('seq', seq.size(), 'enc_output', enc_output.size(), 'mask_enc', mask_enc.size())
         dec_output = self.decoder(seq, enc_output, mask_enc)
-        print('dec_output', dec_output.size())
+        # print('dec_output', dec_output.size())
+        print('forward of Transformer Class')
         return dec_output
 
     def init_state(self, b_s, device):

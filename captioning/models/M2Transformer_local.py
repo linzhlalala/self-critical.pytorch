@@ -57,6 +57,7 @@ class M2TransformerModel_local(TransformerModel):
         # Also the attention mask seems wrong in MAEncoder too...intersting
         
     def logit(self, x): # unsafe way
+        # print(logit_transformer)
         return x # M2transformer always output logsoftmax
 
     def _prepare_feature(self, fc_feats, att_feats, att_masks):
@@ -75,7 +76,8 @@ class M2TransformerModel_local(TransformerModel):
         seq[~seq_mask.any(-2)] = -1 # Make padding to be -1 (my dataloader uses 0 as padding)
         # print('att_feats', att_feats.size(), 'seq', seq.size())
         outputs = self.model(att_feats, seq)
-
+        # print('xxx', self.generator)
+        # print()
         return outputs
 
     def core(self, it, fc_feats_ph, att_feats_ph, memory, state, mask):
@@ -87,9 +89,11 @@ class M2TransformerModel_local(TransformerModel):
         else:
             ys = torch.cat([state[0][0], it.unsqueeze(1)], dim=1)
         out = self.model.decoder(ys, memory, mask)
+        # print('core function of M2TransformerModel_local')
         return out[:, -1], [ys.unsqueeze(0)]
 
     def _sample_beam(self, fc_feats, att_feats, att_masks=None, opt={}):
+        # print('core function of M2TransformerModel_local')
         beam_size = opt.get('beam_size', 10)
         group_size = opt.get('group_size', 1)
         sample_n = opt.get('sample_n', 10)

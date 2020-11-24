@@ -16,6 +16,7 @@ class LossWrapper(torch.nn.Module):
 
     def forward(self, fc_feats, att_feats, labels, masks, att_masks, gts, gt_indices,
                 sc_flag, struc_flag):
+        print('forward inside LossWrapper Class')
         opt = self.opt
         
         out = {}

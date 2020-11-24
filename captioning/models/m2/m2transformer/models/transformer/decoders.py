@@ -77,6 +77,7 @@ class MeshedDecoder(Module):
 
     def forward(self, input, encoder_output, mask_encoder):
         # input (b_s, seq_len)
+        print('forward function MeshedDecoder Class')
         b_s, seq_len = input.shape[:2]
         mask_queries = (input != self.padding_idx).unsqueeze(-1).float()  # (b_s, seq_len, 1)
         mask_self_attention = torch.triu(torch.ones((seq_len, seq_len), dtype=torch.uint8, device=input.device),

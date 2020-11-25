@@ -3,6 +3,7 @@ import pandas as pd
 import json
 import os
 import numpy as np
+import random
 
 
 def txt2string(fpath):
@@ -29,14 +30,29 @@ def txt2string(fpath):
     return finaldict
 
 
+def get_label():
+    sampleList = [0, 0, 0, 0, 0, 0, 0, 1, 1, 2] #: 0 train 1 validate 2 test
+    x = random.choice(sampleList)
+    # if x == 0:
+    #     return 'train'
+    # elif x == 1:
+    #     return 'val'
+    # else:
+    #     return 'test'
+    return x
+
+
 def main(params):
     job_length = params["job_length"]
     length_threshold = params["length_threshold"]
     
-    report_csv = "cxr-study-list.csv"
-    image_csv = "cxr-record-list.csv"
-    metadata_csv = "mimic-cxr-2.0.0-metadata.csv"
-
+    # report_csv = "cxr-study-list.csv"
+    report_csv = "/media/hdd/data/imcaption/mimic/cxr-study-list.csv"
+    # image_csv = "cxr-record-list.csv"
+    image_csv = "/media/hdd/data/imcaption/mimic/cxr-record-list.csv"
+    # metadata_csv = "mimic-cxr-2.0.0-metadata.csv"
+    metadata_csv = "/media/hdd/data/imcaption/mimic/mimic-cxr-2.0.0-metadata.csv"
+    txt_report_prefix = "/media/hdd/data/imcaption/mimic/mimic-cxr-reports"
     report_list = pd.read_csv(report_csv)
     image_list = pd.read_csv(image_csv)
     metadata_list = pd.read_csv(metadata_csv)
@@ -55,17 +71,26 @@ def main(params):
     np.random.shuffle(split)
 
     count = 0
+    # print()
+    train_num = 0
+    test_num = 0
+    val_num = 0
     for i in range(report_list.shape[0]):
+        # print('i', i)
         #a study
-        path = report_list.loc[i,"path"]
+        path = report_list.loc[i, "path"]
         #report to string
-        txt_path = path.replace('files','reports')
+        # txt_path = path.replace('files','reports')
+        txt_path = os.path.join(txt_report_prefix, path)
+        # print(txt_path)
         report_dict = txt2string(txt_path)
 
         #take findings only, no finding = skip
         if "findings" in report_dict:
             text = report_dict["findings"]
         else:
+            # print('there is no finding section', txt_path)
+            # print('there is no finding section')
             continue
         #length check       
         len_text = len(text.split(' '))
@@ -74,10 +99,11 @@ def main(params):
         
         tokens = [token for token in text.split(' ') if token != ""]
         if len(tokens) < 10:
+            print('token is less than 10', print(tokens))
             continue
 
-        study_id = report_list.loc[i,"study_id"]
-        subject_id = report_list.loc[i,"subject_id"]
+        study_id = report_list.loc[i, "study_id"]
+        subject_id = report_list.loc[i, "subject_id"]
         #find corresponding image
         image_paths = []
         #locate
@@ -87,16 +113,18 @@ def main(params):
                 cursor_image_list += 1
             else:                
                 break
+        image_paths.append(image_list.loc[cursor_image_list, "path"].replace('.dcm', '.jpg'))
+        # print(i, image_paths)
         #take
-        while True:
-            image_sid = image_list.loc[cursor_image_list, "study_id"]
-            view_position = metadata_list.loc[cursor_image_list, "ViewPosition"]
-            if image_sid == study_id:
-                if view_position == "PA":
-                    image_paths.append(image_list.loc[cursor_image_list, "path"].replace('.dcm', '.jpg'))
-                cursor_image_list += 1
-            else:
-                break
+        # while True:
+        #     image_sid = image_list.loc[cursor_image_list, "study_id"]
+        #     view_position = metadata_list.loc[cursor_image_list, "ViewPosition"]
+        #     if image_sid == study_id:
+        #         if view_position == "PA":
+        #             image_paths.append(image_list.loc[cursor_image_list, "path"].replace('.dcm', '.jpg'))
+        #         cursor_image_list += 1
+        #     else:
+        #         break
         if image_paths == []:
             continue
         elif len(image_paths) != 1:
@@ -112,26 +140,31 @@ def main(params):
         study['study_id'] = str(study_id)
         study['subject_id'] = str(subject_id)
         # shuffle split
-        if split[count] == 0:
+        label = get_label()
+        if label == 0:
             study['split'] = 'train'
-        elif split[count] == 1:
+            train_num = train_num + 1
+        elif label == 1:
             study['split'] = 'val'
+            val_num = val_num + 1
         else:
             study['split'] = 'test'
+            test_num = test_num + 1
         final_list.append(study)  
         #asset finish
         count += 1
-        if count == job_length:
-            break
+        # if count == job_length:
+        #     break
 
-    print("finish at ",i)
+    # print("finish at ", i)
+    print('train number', train_num, 'test number', test_num, 'val num', val_num)
     #print("Keys appear in report",report_keys)
     #form json
-    with open('findings.json', 'w') as outfile:
-        json.dump({'images':final_list,'dataset':'mimic-cxr-test'}, outfile)
+    with open('data/mimic.json', 'w') as outfile:
+        json.dump({'images': final_list, 'dataset': 'mimic-cxr-test'}, outfile)
 
 
 if __name__ == '__main__':
     print("This edition run for only findings length in (10,50) and PA view")
-    main({"job_length": 2000, "length_threshold": 50})
+    main({"job_length": 227825, "length_threshold": 50})
     print("Job Finish")

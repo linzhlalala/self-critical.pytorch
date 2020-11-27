@@ -61,7 +61,8 @@ def main(params):
 
     for i,img in enumerate(imgs):
         # load the image
-        I = skimage.io.imread(os.path.join(params['images_root'], img['filepath'], img['filename']))
+        # I = skimage.io.imread(os.path.join(params['images_root'], img['filepath'], img['filename']))
+        I = skimage.io.imread(os.path.join(params['images_root'], img['file_path']))
         # handle grayscale input images
         if len(I.shape) == 2:
             I = I[:,:,np.newaxis]
@@ -73,12 +74,15 @@ def main(params):
         with torch.no_grad():
             tmp_fc, tmp_att = my_resnet(I, params['att_size'])
         # write to pkl
-        np.save(os.path.join(dir_fc, str(img['cocoid'])), tmp_fc.data.cpu().float().numpy())
-        np.savez_compressed(os.path.join(dir_att, str(img['cocoid'])), feat=tmp_att.data.cpu().float().numpy())
+        # np.save(os.path.join(dir_fc, str(img['cocoid'])), tmp_fc.data.cpu().float().numpy())
+        # np.savez_compressed(os.path.join(dir_att, str(img['cocoid'])), feat=tmp_att.data.cpu().float().numpy())
+        np.save(os.path.join(dir_fc, str(img['imgid'])), tmp_fc.data.cpu().float().numpy())
+        np.savez_compressed(os.path.join(dir_att, str(img['imgid'])), feat=tmp_att.data.cpu().float().numpy())
 
         if i % 1000 == 0:
             print('processing %d/%d (%.2f%% done)' % (i, N, i*100.0/N))
     print('wrote ', params['output_dir'])
+
 
 if __name__ == "__main__":
 

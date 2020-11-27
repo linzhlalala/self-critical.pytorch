@@ -160,7 +160,7 @@ def main(params):
     print('train number', train_num, 'test number', test_num, 'val num', val_num)
     #print("Keys appear in report",report_keys)
     #form json
-    with open('data/mimic.json', 'w') as outfile:
+    with open('data/dataset_mimic.json', 'w') as outfile:
         json.dump({'images': final_list, 'dataset': 'mimic-cxr-test'}, outfile)
 
 

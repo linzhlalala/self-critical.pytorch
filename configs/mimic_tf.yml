@@ -1,13 +1,13 @@
 # base
 caption_model: transformer
-input_json: data/findings_talk.json
-input_att_dir: data/findings_att
-input_fc_dir: data/findings_fc
+input_json: data/mimictalk.json
+input_att_dir: data/mimictalk_att
+input_fc_dir: data/mimictalk_fc
 
-input_label_h5: data/findings_label.h5
+input_label_h5: data/mimictalk_label.h5
 learning_rate: 0.0005
 scheduled_sampling_start: 0
-checkpoint_path: logs/log_fds_tf
+#checkpoint_path: logs/mimic_tf
 # $start_from
 language_eval: 1
 #save_checkpoint_every: 3000

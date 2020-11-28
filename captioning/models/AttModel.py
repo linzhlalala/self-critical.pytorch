@@ -168,7 +168,7 @@ class AttModel(CaptionModel):
         # print(self_core)
         # print('it', it.size(), 'xt', xt.size())
         # print(xxxxx)
-        print('get_logprobs_state function inside AttModel Class')
+        # print('get_logprobs_state function inside AttModel Class')
         output, state = self.core(xt, fc_feats, att_feats, p_att_feats, state, att_masks)
         # print('output', output.size())
         if output_logsoftmax:

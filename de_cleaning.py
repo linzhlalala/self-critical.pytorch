@@ -92,7 +92,7 @@ def main(output_folder):
             break
     print(ds)
 
-    csv_file = "infos.csv"
+    csv_file = "logs/infos.csv"
     with open(csv_file, 'w', newline='', encoding='utf-8') as csvfile:
         cols = list(save_info.keys())
         cols.extend(['studyid', 'imgid', 'filepath'])

@@ -43,6 +43,8 @@ def getCOCO(dataset):
         annFile = 'data/f30k_captions4eval.json'
     elif 'findings' in dataset:
         annFile = 'data/findings_4eval.json'
+    elif 'mimic' in dataset:
+        annFile = 'data/mimic_eval.json'
     return COCO(annFile)
 
 

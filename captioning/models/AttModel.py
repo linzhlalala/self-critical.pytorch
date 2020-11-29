@@ -259,7 +259,7 @@ class AttModel(CaptionModel):
         return seq, seqLogprobs
 
     def _sample(self, fc_feats, att_feats, att_masks=None, opt={}):
-        print('_sample function of AttModel')
+        # print('_sample function of AttModel')
         sample_method = opt.get('sample_method', 'greedy')
         beam_size = opt.get('beam_size', 1)
         temperature = opt.get('temperature', 1.0)

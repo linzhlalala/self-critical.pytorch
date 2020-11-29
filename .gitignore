@@ -13,5 +13,6 @@ log_m2tf/
 log_m2tfv11/
 log_m2tfv12/
 logs/24.txt
-log_mimic_tf/
+logs/log_mimic_tf/
 .ipynb_checkpoints/
+vis/vis.json

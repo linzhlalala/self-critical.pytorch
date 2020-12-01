@@ -54,8 +54,12 @@ def language_eval(dataset, preds, preds_n, eval_kwargs, split):
     
     # create output dictionary
     out = {}
-
+    # print('The split option is ', split)
+    # print('The dataset value is', dataset)
+    # print(xxxx)
     if len(preds_n) > 0:
+        # print('if len(preds_n) > 0:')
+        # print(xxxx)
         # vocab size and novel sentences
         if 'coco' in dataset:
             dataset_file = 'data/dataset_coco.json'
@@ -77,7 +81,8 @@ def language_eval(dataset, preds, preds_n, eval_kwargs, split):
 
     coco = getCOCO(dataset)
     valids = coco.getImgIds()
-
+    # print(len(valids))
+    # print(xxxx)
     # filter results to only those in MSCOCO validation set
     preds_filt = [p for p in preds if p['image_id'] in valids]
     mean_perplexity = sum([_['perplexity'] for _ in preds_filt]) / len(preds_filt)

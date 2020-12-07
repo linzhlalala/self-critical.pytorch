@@ -3,7 +3,7 @@ import re
 import jieba
 from requests.api import get
 from tqdm import tqdm
-from seeker import seeker
+#from seeker import seeker
 import csv
 
 r1 = '[a-zA-Z0-9’!"#$%&\'()（）*+,-./:;<=>?@，。；：?★、…【】《》？“”‘’！[\\]^_`{|}~ ]+'
@@ -96,7 +96,7 @@ def cut():
     with open('diffwords.txt', 'w',encoding = 'utf-8') as ffile:
         for word in diffwords:
             ffile.write(word+ '\n')
-
+'''
 def search_trans_local():
     with open('tokens.txt', 'r',encoding = 'utf-8') as tof:
         cwords = [line.strip('\n') for line in tof.readlines()]
@@ -339,7 +339,7 @@ def dictword_reduce():
     with open('diffwords.txt', 'w',encoding = 'utf-8') as ffile:
         for word in diffword:
             ffile.write(word+ '\n')
-
+'''
 def manual_fixing_tokens1():
     with open('retwords.txt', 'r',encoding = 'utf-8') as tof:
         tokens = [line.strip('\n') for line in tof.readlines()]
@@ -379,7 +379,7 @@ def manual_fixing_tokens2():
         for word in tokens:
             ffile.write(word+ '\n')
 
-def tokenize_translate():
+def tokenize_translate_cn2tk():
     #cut it
     freport = "label.xlsx"
     reportlist = pd.read_excel(freport)
@@ -461,6 +461,42 @@ def tokenize_translate():
         for key, value in trans_dict.items():
             writer.writerow([key, value])
         
+def tokenize_translate_tk2cn():
+    freport = "token_trans_reports.csv"
+    reportlist = pd.read_csv(freport)
+    reportlist.fillna('',inplace=True)
+
+    dict_tk2cn = {}
+    with open('token_trans_dict.csv','r',encoding = 'utf-8') as dictfile: 
+        reader=csv.reader(dictfile,delimiter=',')
+        for row in reader:
+            dict_tk2cn[row[1]]=row[0]
+
+    def tk2cn(tks):
+        if tks =="": return ""
+        ltk = tks.split(" ")
+        ans = ""
+        for tk in ltk:
+            ans += dict_tk2cn[tk]
+        return ans
+
+    newlist = []
+    for index, row in tqdm(reportlist.iterrows()):
+        id  = row['id']
+        finding = row['Findings']
+        impression = row['Impression']
+
+        cnFds = tk2cn(finding)
+        cnImp = tk2cn(impression)
+
+        newlist.append({'id':id,
+            'Findings': cnFds,
+            'Impression': cnImp,
+        })
+        if index == 10:
+            break
+    print(newlist) 
+
 if __name__ == "__main__":
     #clean()
     #print("clean finish")
@@ -474,4 +510,6 @@ if __name__ == "__main__":
     #search_trans_second()
     #manual_fixing_dict()
     #rough_translate()
-    tokenize_translate()
+    #tokenize_translate_cn2tk()
+    tokenize_translate_tk2cn()
+

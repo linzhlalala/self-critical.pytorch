@@ -1,0 +1,28 @@
+# base
+caption_model: updown
+input_json: data/mimictalk.json
+input_att_dir: data/mimictalk_att
+input_fc_dir: data/mimictalk_fc
+input_label_h5: data/mimictalk_label.h5
+learning_rate: 0.0005
+scheduled_sampling_start: 0
+# checkpoint_path: $ckpt_path
+# $start_from
+language_eval: 1
+save_checkpoint_every: 54317
+val_images_use: 15478
+rnn_size: 1000
+input_encoding_size: 1000
+att_feat_size: 2048
+att_hid_size: 512
+checkpoint_path: logs/mimic_updown
+save_every_epoch: True
+save_history_ckpt: True
+
+
+
+train_sample_n: 5
+self_critical_after: 30
+batch_size: 10
+learning_rate_decay_start: 0
+max_epochs: 30

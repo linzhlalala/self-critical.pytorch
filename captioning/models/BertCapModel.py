@@ -73,6 +73,7 @@ class BertCapModel(TransformerModel):
                                 hidden_dropout_prob=dropout,
                                 attention_probs_dropout_prob=dropout,
                                 max_position_embeddings=17,
+                                # max_position_embeddings=51,
                                 type_vocab_size=1,
                                 is_decoder=True)
         encoder = BertModel(enc_config)

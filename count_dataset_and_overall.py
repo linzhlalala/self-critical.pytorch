@@ -27,7 +27,8 @@ import json
 #         i = 0
 
 # file_name = 'eval_results/a2i2_test.json'
-file_name = 'eval_results/fc_test.json'
+# file_name = 'eval_results/fc_test.json'
+file_name = 'eval_results/m2_test.json'
 with open(file_name) as json_file:
     data = json.load(json_file)
     keys = data.keys()

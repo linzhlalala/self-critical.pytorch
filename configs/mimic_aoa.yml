@@ -29,10 +29,12 @@ rnn_size: 1024
 learning_rate_decay_start: 0
 scheduled_sampling_start: 0
 save_checkpoint_every: 54317
-val_images_use: 7700
+val_images_use: 15478
 language_eval: 1
+checkpoint_path: logs/mimic_aoa
 save_every_epoch: True
 save_history_ckpt: True
+
 
 max_epochs: 30
 scheduled_sampling_increase_every: 5

@@ -129,6 +129,8 @@ def language_eval(dataset, preds, preds_n, eval_kwargs, split):
         
     out['bad_count_rate'] = sum([count_bad(_['caption']) for _ in preds_filt]) / float(len(preds_filt))
     outfile_path = os.path.join('eval_results/', model_id + '_' + split + '.json')
+    # print(xxxxx)
+    print('split mode is', split)
     with open(outfile_path, 'w') as outfile:
         json.dump({'overall': out, 'imgToEval': imgToEval}, outfile)
 

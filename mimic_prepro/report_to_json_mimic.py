@@ -4,7 +4,7 @@ import json
 import os
 import numpy as np
 import random
-
+from tqdm import tqdm
 
 def txt2string(fpath):
     f = open(fpath,'r')
@@ -58,7 +58,8 @@ def main(params):
     metadata_list = pd.read_csv(metadata_csv)
 
     report_keys = {}
-    cursor_image_list = 0
+    cursor_image_list = 0    
+    length_image_list = image_list.shape[0]
 
     val_split = int(0.2*job_length)
     test_split = int(0.1*job_length)
@@ -75,7 +76,7 @@ def main(params):
     train_num = 0
     test_num = 0
     val_num = 0
-    for i in range(report_list.shape[0]):
+    for i in tqdm(range(report_list.shape[0])):
         # print('i', i)
         #a study
         path = report_list.loc[i, "path"]
@@ -107,14 +108,14 @@ def main(params):
         #find corresponding image
         image_paths = []
         #locate all first image
-        while True:
+        while cursor_image_list<length_image_list:
             image_sid = image_list.loc[cursor_image_list,"study_id"]
             if image_sid != study_id:
                 cursor_image_list += 1
             else:                
                 break
         #take all
-        while True:
+        while cursor_image_list<length_image_list:
             image_sid = image_list.loc[cursor_image_list, "study_id"]
             if image_sid == study_id:
                 image_paths.append(image_list.loc[cursor_image_list, "path"].replace('.dcm', '.jpg'))

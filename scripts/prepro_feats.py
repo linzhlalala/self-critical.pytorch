@@ -35,6 +35,10 @@ preprocess = trn.Compose([
                 trn.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
 ])
 
+import sys
+from os.path import abspath, dirname, join
+sys.path.insert(0, join(abspath(dirname(__file__)),'..'))
+
 from captioning.utils.resnet_utils import myResnet
 import captioning.utils.resnet as resnet
 
@@ -61,8 +65,8 @@ def main(params):
 
     for i,img in enumerate(imgs):
         # load the image
-        # I = skimage.io.imread(os.path.join(params['images_root'], img['filepath'], img['filename']))
-        I = skimage.io.imread(os.path.join(params['images_root'], img['file_path']))
+        I = skimage.io.imread(os.path.join(params['images_root'], img['filepath'], img['filename']))
+        #I = skimage.io.imread(os.path.join(params['images_root'], img['file_path']))
         # handle grayscale input images
         if len(I.shape) == 2:
             I = I[:,:,np.newaxis]

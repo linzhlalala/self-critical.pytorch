@@ -28,6 +28,13 @@ import numpy as np
 import torch
 import torchvision.models as models
 import skimage.io
+import logging
+
+logging.basicConfig(level=logging.DEBUG,
+                    filename='prepro.log',
+                    filemode='w',
+                    format='%(asctime)s - %(pathname)s[line:%(lineno)d] - %(levelname)s: %(message)s'
+                    )
 
 from torchvision import transforms as trn
 preprocess = trn.Compose([
@@ -83,8 +90,8 @@ def main(params):
         np.save(os.path.join(dir_fc, str(img['imgid'])), tmp_fc.data.cpu().float().numpy())
         np.savez_compressed(os.path.join(dir_att, str(img['imgid'])), feat=tmp_att.data.cpu().float().numpy())
 
-        if i % 1000 == 0:
-            print('processing %d/%d (%.2f%% done)' % (i, N, i*100.0/N))
+        if i % 100 == 0:
+            logging.debug('processing %d/%d (%.2f%% done)' % (i, N, i*100.0/N))
     print('wrote ', params['output_dir'])
 
 

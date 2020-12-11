@@ -3,7 +3,9 @@ import os
 
 def main(anno_file):
     js_file = json.load(open(anno_file,'r'))
-    report_list = js_file["train"]
+    report_list = list(js_file["train"])
+    report_list.extend(list(js_file["val"]))
+    report_list.extend(list(js_file["test"]))
     new_list = []
 
     count_id = 0
@@ -28,11 +30,11 @@ def main(anno_file):
             new_list.append(study)
     print("convert totally:{} reports, {} images".format(len(report_list),count_id))
 
-    with open("D://datas//iu_xray//dataset_iu.json","w") as output:
+    with open("..//iu_xray//dataset_iu.json","w") as output:
         json.dump({"images":new_list,'dataset':"iu_xray"},output)
 
 if __name__ == '__main__':
-    iu_anno_path = os.path.join('D:',os.sep,"datas","iu_xray","annotation.json")
+    iu_anno_path = os.path.join("..","iu_xray","annotation.json")
     anno_file = main(iu_anno_path)
 
 

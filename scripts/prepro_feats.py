@@ -30,8 +30,8 @@ import torchvision.models as models
 import skimage.io
 import logging
 
-logging.basicConfig(level=logging.DEBUG,
-                    filename='prepro.log',
+logging.basicConfig(level=logging.INFO,
+                    filename='logs//prepro.log',
                     filemode='w',
                     format='%(asctime)s - %(pathname)s[line:%(lineno)d] - %(levelname)s: %(message)s'
                     )
@@ -91,7 +91,7 @@ def main(params):
         np.savez_compressed(os.path.join(dir_att, str(img['imgid'])), feat=tmp_att.data.cpu().float().numpy())
 
         if i % 100 == 0:
-            logging.debug('processing %d/%d (%.2f%% done)' % (i, N, i*100.0/N))
+            logging.info('processing %d/%d (%.2f%% done)' % (i, N, i*100.0/N))
     print('wrote ', params['output_dir'])
 
 

@@ -41,6 +41,21 @@ def get_label():
     #     return 'test'
     return x
 
+def clean_report_mimic_cxr(report):
+    report_cleaner = lambda t: t.replace('\n', ' ').replace('__', '_').replace('__', '_').replace('__', '_') \
+        .replace('__', '_').replace('__', '_').replace('__', '_').replace('__', '_').replace('  ', ' ') \
+        .replace('  ', ' ').replace('  ', ' ').replace('  ', ' ').replace('  ', ' ').replace('  ', ' ') \
+        .replace('..', '.').replace('..', '.').replace('..', '.').replace('..', '.').replace('..', '.') \
+        .replace('..', '.').replace('..', '.').replace('..', '.').replace('1. ', '').replace('. 2. ', '. ') \
+        .replace('. 3. ', '. ').replace('. 4. ', '. ').replace('. 5. ', '. ').replace(' 2. ', '. ') \
+        .replace(' 3. ', '. ').replace(' 4. ', '. ').replace(' 5. ', '. ') \
+        .strip().lower().split('. ')
+    sent_cleaner = lambda t: re.sub('[.,?;*!%^&_+():-\[\]{}]', '', t.replace('"', '').replace('/', '')
+                                    .replace('\\', '').replace("'", '').strip().lower())
+    tokens = [sent_cleaner(sent) for sent in report_cleaner(report) if sent_cleaner(sent) != []]
+    report = ' . '.join(tokens) + ' .'
+    return report
+
 
 def main(params):
     # job_length = params["job_length"]
@@ -60,6 +75,7 @@ def main(params):
     report_keys = {}
     cursor_image_list = 0    
     length_image_list = image_list.shape[0]
+    token_length_list = []
 
 
 
@@ -80,11 +96,12 @@ def main(params):
 
         #take "findings + impression" only, no finding or impression -> skip
         if "findings" not in report_dict and "impression" not in report_dict:
-            print('there is no finding section', txt_path)
+            # print('there is no finding or impression section', txt_path)
             continue
         else:
             text = report_dict.get("findings",'')+report_dict.get("impression",'')
-            
+        if text == "":
+            print(xxxx)
         #length check       
         len_text = len(text.split(' '))
         if len_text > length_threshold:
@@ -96,7 +113,7 @@ def main(params):
             # print('token is shorter than 10', print(tokens))
             # continue
             pass
-
+        token_length_list.append(len(tokens))
         study_id = report_list.loc[i, "study_id"]
         subject_id = report_list.loc[i, "subject_id"]
         #find corresponding image
@@ -145,7 +162,23 @@ def main(params):
         #   break
 
     # print("finish at ", i)
-    print('train number', train_num, 'test number', test_num, 'val num', val_num)
+    print('total number', train_num+test_num+val_num,
+     'train number', train_num,
+      'test number', test_num,
+       'val num', val_num)
+    import collections
+    counter = collections.Counter
+    print(counter(token_length_list))
+    # Generate data on commute times.
+    size, scale = 1000, 10
+    commutes = pd.Series(np.random.gamma(scale, size=size) ** 1.5)
+
+    commutes.plot.hist(grid=True, bins=20, rwidth=0.9,
+                       color='#607c8e')
+    plt.title('Commute Times for 1,000 Commuters')
+    plt.xlabel('Counts')
+    plt.ylabel('Commute Time')
+    plt.grid(axis='y', alpha=0.75)
     #print("Keys appear in report",report_keys)
     #form json
     # with open('data/dataset_mimic.json', 'w') as outfile:
@@ -153,6 +186,6 @@ def main(params):
 
 
 if __name__ == '__main__':
-    print("This edition run for only findings length in (10,100) and PA view")
+    # print("This edition run for only findings length in (10,100) and PA view")
     main({"length_threshold": 100})
     print("Job Finish")

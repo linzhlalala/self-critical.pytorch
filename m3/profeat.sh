@@ -1,0 +1,1 @@
+python scripts/prepro_feats.py --input_json ../iu_xray/dataset_iu.json --output_dir ../iu_xray/iu_xray --images_root ../iu_xray/images

@@ -1,6 +1,9 @@
 python convert_mimic.py
 python profeat_mimic.py --input_json data/dataset_mimic_rm.json --output_dir data/mimicrm --images_root /media/hdd/donghao/imcaption/R2Gen/data/mimic_cxr/images
 python scripts/prepro_labels.py --input_json data/dataset_mimic_rm.json --output_json data/mimicrmtalk.json --output_h5 data/mimicrmtalk --max_length 60
+python scripts/prepro_reference_json_mimic.py --input_json data/mimicrmtalk.json --output_json data/mimicrm_eval.json
+python scripts/prepro_reference_json_mimic.py --input_json data/dataset_mimic.json --output_json data/mimic_eval.json
+# modify  
 python tools/train.py --cfg configs/mimic_aoa.yml --id aoa
 python tools/train.py --cfg configs/mimic_a2i2.yml --id a2i2
 python tools/train.py --cfg configs/fds_tf.yml --id tfdebugv3

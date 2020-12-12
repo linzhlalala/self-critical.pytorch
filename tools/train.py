@@ -30,7 +30,7 @@ def add_summary_value(writer, key, value, iteration):
         writer.add_scalar(key, value, iteration)
 
 def train(opt):
-
+    print(opt)
     ################################
     # Build dataloader
     ################################
@@ -77,6 +77,8 @@ def train(opt):
     del opt.vocab
     # Load pretrained weights:
     if opt.start_from is not None and os.path.isfile(os.path.join(opt.start_from, 'model.pth')):
+        print(opt.start_from)
+        print('this line has been called')
         model.load_state_dict(torch.load(os.path.join(opt.start_from, 'model.pth')))
     
     # Wrap generation model with loss function(used for training)

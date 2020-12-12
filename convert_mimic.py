@@ -86,7 +86,6 @@ for each_item in data['test']:
     text = each_item['report'] 
     text = clean_report_mimic_cxr(text)
     tokens = [token for token in text.split(' ') if token != ""]
-    count = count + 1
     # if len(each_item['image_path']) > 1:
     #     print('bingo')
     for impath in each_item['image_path']:
@@ -133,6 +132,7 @@ print('train_image_num', train_report_num, 'val_image_num', val_report_num, 'tes
 # print(data['test'][35])
 # print(data['test'][36])
 print(keys)
-
+# with open('data/dataset_mimic_rm.json', 'w') as outfile:
+#     json.dump({'images': final_list, 'dataset': 'mimic-rm'}, outfile)
 
 

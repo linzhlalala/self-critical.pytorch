@@ -7,7 +7,7 @@ input_fc_dir: data/mimictalk_fc
 input_label_h5: data/mimictalk_label.h5
 learning_rate: 0.0005
 scheduled_sampling_start: 0
-checkpoint_path: logs/mimic_tfv2
+# checkpoint_path: logs/mimic_tfv2
 # $start_from
 language_eval: 1
 #save_checkpoint_every: 3000

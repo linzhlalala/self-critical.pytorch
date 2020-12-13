@@ -15,6 +15,11 @@ from six.moves import cPickle
 import traceback
 from collections import defaultdict
 
+import sys
+from os.path import abspath, dirname, join
+sys.path.insert(0, join(abspath(dirname(__file__)),'..'))
+
+
 import captioning.utils.opts as opts
 import captioning.models as models
 from captioning.data.dataloader import *
@@ -23,6 +28,7 @@ import captioning.utils.eval_utils as eval_utils
 import captioning.utils.misc as utils
 from captioning.utils.rewards import init_scorer, get_self_critical_reward
 from captioning.modules.loss_wrapper import LossWrapper
+
 
 
 def add_summary_value(writer, key, value, iteration):
@@ -176,7 +182,9 @@ def train(opt):
             tmp = [data['fc_feats'], data['att_feats'], data['labels'], data['masks'], data['att_masks']]
             tmp = [_ if _ is None else _.cuda() for _ in tmp]
             fc_feats, att_feats, labels, masks, att_masks = tmp
-            
+            #LINZH
+            labels = labels.long()
+
             optimizer.zero_grad()
             model_out = dp_lw_model(fc_feats, att_feats, labels, masks, att_masks, data['gts'], torch.arange(0, len(data['gts'])), sc_flag, struc_flag)
 
@@ -284,5 +292,10 @@ def train(opt):
         print(stack_trace)
 
 
-opt = opts.parse_opt()
-train(opt)
+
+
+
+if __name__ == '__main__':
+    
+    opt = opts.parse_opt()
+    train(opt)

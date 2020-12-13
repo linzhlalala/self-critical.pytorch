@@ -4,6 +4,7 @@ captioning/data/__pycache__/
 captioning/models/__pycache__/
 captioning/modules/__pycache__/
 captioning/utils/__pycache__/
+coco-caption/*
 data/*
 logs/*
 eval_results

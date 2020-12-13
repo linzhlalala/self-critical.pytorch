@@ -45,6 +45,8 @@ def getCOCO(dataset):
         annFile = 'data/findings_4eval.json'
     elif 'mimic' in dataset:
         annFile = 'data/mimic_eval.json'
+    elif 'iu_xray'  in dataset:
+        annFile = '../iu_xray/iu_eval.json'
     return COCO(annFile)
 
 
@@ -166,6 +168,8 @@ def eval_split(model, crit, loader, eval_kwargs={}):
         tmp = [data['fc_feats'], data['att_feats'], data['labels'], data['masks'], data['att_masks']]
         tmp = [_.to(device) if _ is not None else _ for _ in tmp]
         fc_feats, att_feats, labels, masks, att_masks = tmp
+        #LINZH
+        labels = labels.long()
         if labels is not None and verbose_loss:
             # forward the model to get loss
             with torch.no_grad():

@@ -18,6 +18,7 @@ from collections import defaultdict
 import sys
 from os.path import abspath, dirname, join
 sys.path.insert(0, join(abspath(dirname(__file__)),'..'))
+sys.path.insert(0, join(abspath(dirname(__file__)),'..','captioning','models','m2'))
 
 
 import captioning.utils.opts as opts

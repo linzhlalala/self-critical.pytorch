@@ -1,1 +1,1 @@
-python tools/train.py --cfg configs/iu_a2i2.yml --id a2i2
+python tools/train.py --cfg configs/iu_fc.yml --id fc

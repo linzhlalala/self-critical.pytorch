@@ -17,12 +17,12 @@ import sys
 from . import misc as utils
 
 # load coco-caption if available
-try:
-    sys.path.append("coco-caption")
-    from pycocotools.coco import COCO
-    from pycocoevalcap.eval import COCOEvalCap
-except:
-    print('Warning: coco-caption not available')
+#try:
+#    sys.path.append("coco-caption")
+from pycocotools.coco import COCO
+from pycocoevalcap.eval import COCOEvalCap
+#except:
+#    print('Warning: coco-caption not available')
 
 bad_endings = ['a','an','the','in','for','at','of','with','before','after','on','upon','near','to','is','are','am']
 bad_endings += ['the']

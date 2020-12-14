@@ -37,7 +37,7 @@ def main(params):
     for i, img in enumerate(imgs):
         if img['split'] == 'train':
             continue
-        print(img)
+        # print(img)
         out['images'].append(
             {'id': img['imgid']})
         for j, s in enumerate(img['sentences']):
@@ -48,8 +48,8 @@ def main(params):
                 {'image_id': out['images'][-1]['id'], 'caption': s, 'id': cnt})
             cnt += 1
     #
-    # json.dump(out, open(params['output_json'], 'w'))
-    # print('wrote ', params['output_json'])
+    json.dump(out, open(params['output_json'], 'w'))
+    print('wrote ', params['output_json'])
 
 
 if __name__ == "__main__":

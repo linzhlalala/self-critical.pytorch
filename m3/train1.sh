@@ -1,0 +1,1 @@
+python tools/train.py --cfg configs/iu_aoa.yml --id aoa

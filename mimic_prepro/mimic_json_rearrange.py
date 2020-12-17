@@ -20,8 +20,8 @@ def main(anno_file):
             image_name = image.split("/")
             #build new record
             study = {}
-            study['filepath'] = image_name[0]
-            study['filename'] = image_name[1]
+            study['filepath'] = '/'.join(image_name[0:3])
+            study['filename'] = image_name[3]
             study['sentids'] = [count_id]
             study['imgid'] = count_id
             study['sentences'] = [{'raw':text,'imgid':count_id,'sentid':count_id,'tokens':tokens}]
@@ -30,11 +30,11 @@ def main(anno_file):
             new_list.append(study)
     print("convert totally:{} reports, {} images".format(len(report_list),count_id))
 
-    with open("..//iu_xray//dataset_iu.json","w") as output:
+    with open("..//mimic_cxr_256//dataset_m256.json","w") as output:
         json.dump({"images":new_list,'dataset':"iu_xray"},output)
 
 if __name__ == '__main__':
-    iu_anno_path = os.path.join("..","iu_xray","annotation.json")
+    iu_anno_path = os.path.join("..","mimic_cxr_256","annotation.json")
     anno_file = main(iu_anno_path)
 
 

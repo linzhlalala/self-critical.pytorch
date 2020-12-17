@@ -18,3 +18,4 @@ logs/log_mimic_tf/
 .ipynb_checkpoints/
 vis/vis.json
 *.pyc
+m3/*

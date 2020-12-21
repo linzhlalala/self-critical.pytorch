@@ -9,6 +9,13 @@ import time
 import os
 from six.moves import cPickle
 
+import sys
+from os.path import abspath, dirname, join
+sys.path.insert(0, join(abspath(dirname(__file__)),'..'))
+sys.path.insert(0, join(abspath(dirname(__file__)),'..','coco-caption'))
+sys.path.insert(0, join(abspath(dirname(__file__)),'..','captioning','models','m2'))
+print("sys.path:",sys.path)
+
 import captioning.utils.opts as opts
 import captioning.models as models
 from captioning.data.dataloader import *

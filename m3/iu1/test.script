@@ -1,0 +1,12 @@
+#!/bin/bash
+#SBATCH --job-name=iu_profeat
+#SBATCH --account=bw83
+#SBATCH --gres=gpu:V100:1
+#SBATCH --partition=m3g
+#SBATCH --ntasks=1
+#SBATCH --time=24:00:00
+
+echo "test prefeat"
+module load cuda
+nvidia-smi 
+sh m3/profeat.sh 2>&1 | tee output.txt 

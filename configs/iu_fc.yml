@@ -19,5 +19,6 @@ save_history_ckpt: True
 
 batch_size: 10
 max_epochs: 30
+max_length: 60
 train_sample_n: 5
 self_critical_after: -1

@@ -19,4 +19,4 @@ self_critical_after: -1
 batch_size: 10
 learning_rate_decay_start: 0
 max_epochs: 30
-max_length: 50
+max_length: 60

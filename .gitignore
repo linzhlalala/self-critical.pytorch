@@ -19,6 +19,6 @@ logs/log_mimic_tf/
 .ipynb_checkpoints/
 vis/vis.json
 *.pyc
-vis/img/*
+vis/imgs/*
 m3/*
 >>>>>>> d5896a4125dedcaf574749c86ffa9e2057c6d660

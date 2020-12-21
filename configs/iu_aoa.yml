@@ -37,6 +37,7 @@ save_every_epoch: True
 save_history_ckpt: True
 
 max_epochs: 30
+max_length: 60
 scheduled_sampling_increase_every: 5
 scheduled_sampling_max_prob: 0.5
 learning_rate_decay_every: 3

@@ -8,6 +8,9 @@ import csv
 import os
 from os import listdir
 from collections import Counter
+import matplotlib.pyplot as plt
+import numpy as np
+
 
 r1 = '[a-zA-Z0-9’!"#$%&\'()（）*+,-./:;<=>?@，。；：?★、…【】《》？“”‘’！[\\]^_`{|}~ ]+'
 
@@ -265,6 +268,20 @@ def im_address():
     reportlist.fillna('', inplace=True)
     prefix_path = '/media/hdd/data/imcaption/retina_dataset_resize/resize'
     finding_counter = []
+
+    dict_tk2cn = {}
+    with open('data/token_trans_dict.csv','r',encoding = 'utf-8') as dictfile: 
+        reader=csv.reader(dictfile,delimiter=',')
+        for row in reader:
+            dict_tk2cn[row[1]]=row[0]
+    def tk2cn(tks):
+        if tks =="": return ""
+        ltk = tks.split(" ")
+        ans = ""
+        for tk in ltk:
+            ans += dict_tk2cn[tk]
+        return ans
+    # load the coding example 
     for index, row in tqdm(reportlist.iterrows()):
         i = index
         folderpath = os.path.join(prefix_path, reportlist.iloc[index]['id'])
@@ -274,10 +291,29 @@ def im_address():
                 ab_f_path = os.path.join(folderpath, f)
                 # print(reportlist.iloc[index]['Findings'], ab_f_path)
                 finding = reportlist.iloc[index]['Findings']
-                finding_counter.append(len(finding))
+                impression = reportlist.iloc[index]['Impression']
+                finding_token = finding.split(" ")
+                finding_length = len(finding_token)
+                # print('finding_length', finding_length)
+                if finding_length < 5:
+                    # for token_f in finding:
+                    #     print('token_f', token_f)
+                    cn_finding = tk2cn(finding)
+                    print('cn_finding', cn_finding, 'finding', finding)
+                finding_counter.append(finding_length)
+        # if index == 4000:
+        #     break
+    cn_finding = tk2cn(finding)
+    cn_impression = tk2cn(impression)
+    # print('finding convcerted back to Chinese', cn_finding)
     # print(index, row['id'])
-    print('total number of images', len(finding_counter))
-
+    # print('total number of images', len(finding_counter))
+    finding_distribution = Counter(finding_counter)
+    print(Counter(finding_counter))
+    # plt.hist(finding_counter, bins=20)
+    # plt.show()
+    # print(dict_tk2cn)
+    # print('report length distribution', print(Counter(finding_counter)))
 if __name__ == "__main__":
     # tokenize_translate_tk2cn()
     im_address()

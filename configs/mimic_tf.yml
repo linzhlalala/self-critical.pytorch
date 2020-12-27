@@ -12,6 +12,7 @@ scheduled_sampling_start: 0
 language_eval: 1
 #save_checkpoint_every: 3000
 save_every_epoch: True
+save_history_ckpt: True
 val_images_use: -1
 
 train_sample_n: 5

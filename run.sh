@@ -21,3 +21,5 @@ python tools/eval_mimic.py --model logs/mimic_fc/model-best.pth --infos_path log
 python tools/eval_mimic.py --model logs/mimic_m2/model-best.pth --infos_path logs/mimic_m2/infos_m2-best.pkl --split test
 python tools/eval_mimic.py --model logs/mimic_aoa/model-best.pth --infos_path logs/mimic_aoa/infos_aoa-best.pkl --split test
 python tools/eval_mimic.py --model logs/mimicrm_tf/model-best.pth --infos_path logs/mimicrm_tf/infos_tfrm-best.pkl --split test
+python tools/eval_mimic.py --model logs/mimicrm_tfv2/model-best.pth --infos_path logs/mimicrm_tf/infos_tfrm-best.pkl --split test
+python tools/eval_mimic.py --model logs/mimicrm_tfv2/model-15.pth --infos_path logs/mimicrm_tfv2/infos_tfrm-15.pkl --split test

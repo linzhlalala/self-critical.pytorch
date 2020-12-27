@@ -6,7 +6,7 @@ input_fc_dir: data/mimicrm_fc
 input_label_h5: data/mimicrmtalk_label.h5
 learning_rate: 0.0005
 scheduled_sampling_start: 0
-checkpoint_path: logs/mimicrm_tf
+checkpoint_path: logs/mimicrm_tfv2
 # $start_from
 language_eval: 1
 #save_checkpoint_every: 3000
@@ -15,6 +15,7 @@ language_eval: 1
 save_checkpoint_every: 270790
 val_images_use: 2000
 save_every_epoch: True
+save_history_ckpt: True
 # val_images_use: -1
 
 train_sample_n: 5
@@ -22,4 +23,4 @@ self_critical_after: -1
 batch_size: 10
 learning_rate_decay_start: 0
 max_epochs: 30
-max_length: 50
+max_length: 60

@@ -10,6 +10,8 @@ from os import listdir
 from collections import Counter
 import matplotlib.pyplot as plt
 import numpy as np
+import random
+import json
 
 
 r1 = '[a-zA-Z0-9’!"#$%&\'()（）*+,-./:;<=>?@，。；：?★、…【】《》？“”‘’！[\\]^_`{|}~ ]+'
@@ -262,6 +264,16 @@ def tokenize_translate_tk2cn():
             break
     print(newlist)
 
+def get_label():
+    sampleList = [0, 0, 0, 0, 0, 0, 0, 1, 1, 2] #: 0 train 1 validate 2 test
+    x = random.choice(sampleList)
+    if x == 0:
+        return 'train'
+    elif x == 1:
+        return 'val'
+    else:
+        return 'test'
+
 def im_address():
     freport = "data/token_trans_reports.csv"
     reportlist = pd.read_csv(freport)
@@ -281,7 +293,9 @@ def im_address():
         for tk in ltk:
             ans += dict_tk2cn[tk]
         return ans
-    # load the coding example 
+    # load the coding example
+    final_list = []
+    count = 0 
     for index, row in tqdm(reportlist.iterrows()):
         i = index
         folderpath = os.path.join(prefix_path, reportlist.iloc[index]['id'])
@@ -295,11 +309,21 @@ def im_address():
                 finding_token = finding.split(" ")
                 finding_length = len(finding_token)
                 # print('finding_length', finding_length)
-                if finding_length < 5:
+                if finding_length > 5:
                     # for token_f in finding:
                     #     print('token_f', token_f)
+                    count = count + 1
                     cn_finding = tk2cn(finding)
-                    print('cn_finding', cn_finding, 'finding', finding)
+                    # print('cn_finding', cn_finding, 'finding', finding)
+                    study = {}
+                    study['file_path'] = ab_f_path
+                    study['sentids'] = [count]
+                    study['imgid'] = count
+                    study['sentences'] = [{'raw':finding,'imgid':count,'sentid':count,'tokens':finding_token}]
+                    # study['study_id'] = 0
+                    # study['subject_id'] = 0
+                    study['split'] = get_label()
+                    final_list.append(study)
                 finding_counter.append(finding_length)
         # if index == 4000:
         #     break
@@ -314,6 +338,8 @@ def im_address():
     # plt.show()
     # print(dict_tk2cn)
     # print('report length distribution', print(Counter(finding_counter)))
+    with open('data/dataset_retina_resize.json', 'w') as outfile:
+        json.dump({'images': final_list, 'dataset': 'retina_resize'}, outfile)
 if __name__ == "__main__":
     # tokenize_translate_tk2cn()
     im_address()

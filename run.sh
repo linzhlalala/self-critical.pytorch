@@ -1,6 +1,9 @@
 python convert_mimic.py
+python convert_retina.py
 python profeat_mimic.py --input_json data/dataset_mimic_rm.json --output_dir data/mimicrm --images_root /media/hdd/donghao/imcaption/R2Gen/data/mimic_cxr/images
-python scripts/prepro_labels.py --input_json data/dataset_mimic_rm.json --output_json data/mimicrmtalk.json --output_h5 data/mimicrmtalk --max_length 60
+python profeat_retina.py --input_json data/dataset_retina_resize.json --output_dir data/retina_resize
+python scripts/prepro_labels.py --input_json data/dataset_mimic_rm.json --output_json data/mimicrmtalk.json --output_h5 data/mimicrmtalk --max_length 60 
+python scripts/prepro_labels.py --input_json data/dataset_retina_resize.json --output_json data/retinaresizetalk.json --output_h5 data/retinaresizetalk --max_length 60
 python scripts/prepro_reference_json_mimic.py --input_json data/dataset_mimic_rm.json --output_json data/mimicrm_eval.json
 python scripts/prepro_reference_json_mimic.py --input_json data/dataset_mimic.json --output_json data/mimic_eval.json
 # modify the file named eval_utils.py located at captioning/utils/eval_utils.py

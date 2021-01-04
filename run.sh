@@ -6,9 +6,11 @@ python scripts/prepro_labels.py --input_json data/dataset_mimic_rm.json --output
 python scripts/prepro_labels.py --input_json data/dataset_retina_resize.json --output_json data/retinaresizetalk.json --output_h5 data/retinaresizetalk --max_length 60
 python scripts/prepro_reference_json_mimic.py --input_json data/dataset_mimic_rm.json --output_json data/mimicrm_eval.json
 python scripts/prepro_reference_json_mimic.py --input_json data/dataset_mimic.json --output_json data/mimic_eval.json
+python count_dataset_and_overall.py
 # modify the file named eval_utils.py located at captioning/utils/eval_utils.py
-# modify getCOCO function  
+# modify getCOCO function
 python tools/train.py --cfg configs/mimic_aoa.yml --id aoa
+python tools/train.py --cfg configs/retina_aoa.yaml --id retina_aoa
 python tools/train.py --cfg configs/mimic_a2i2.yml --id a2i2
 python tools/train.py --cfg configs/fds_tf.yml --id tfdebugv3
 python tools/train.py --cfg configs/mimic_fc.yml --id fc
@@ -26,3 +28,12 @@ python tools/eval_mimic.py --model logs/mimic_aoa/model-best.pth --infos_path lo
 python tools/eval_mimic.py --model logs/mimicrm_tf/model-best.pth --infos_path logs/mimicrm_tf/infos_tfrm-best.pkl --split test
 python tools/eval_mimic.py --model logs/mimicrm_tfv2/model-best.pth --infos_path logs/mimicrm_tf/infos_tfrm-best.pkl --split test
 python tools/eval_mimic.py --model logs/mimicrm_tfv2/model-15.pth --infos_path logs/mimicrm_tfv2/infos_tfrm-15.pkl --split test
+
+python convert_retina_tiny.py
+python profeat_retina.py --input_json data/dataset_retina_resize_tiny.json --output_dir data/retina_resize_tiny
+python scripts/prepro_labels.py --input_json data/dataset_retina_resize_tiny.json --output_json data/retinatinytalk.json --output_h5 data/retinatinytalk --max_length 60
+python count_dataset_and_overall.py
+# modify the file named eval_utils.py located at captioning/utils/eval_utils.py
+# modify getCOCO function
+python tools/train.py --cfg configs/retina_tiny_aoa.yml --id retina_tiny_aoa
+# create config file 

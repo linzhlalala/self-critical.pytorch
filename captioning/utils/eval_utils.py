@@ -47,6 +47,10 @@ def getCOCO(dataset):
         annFile = 'data/findings_4eval.json'
     elif 'mimic' in dataset:
         annFile = 'data/mimic_eval.json'
+    elif 'retina' in dataset:
+        annFile = 'data/retina_tiny_eval.json'
+    # elif 'retina' in dataset:
+    #     annFile = 'data/retina_resize_eval.json'
     return COCO(annFile)
 
 
@@ -57,7 +61,7 @@ def language_eval(dataset, preds, preds_n, eval_kwargs, split):
     # create output dictionary
     out = {}
     # print('The split option is ', split)
-    # print('The dataset value is', dataset)
+    print('The dataset value is', dataset)
     # print(xxxx)
     if len(preds_n) > 0:
         # print('if len(preds_n) > 0:')

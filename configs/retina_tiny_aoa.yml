@@ -14,10 +14,10 @@ ctx_drop: 1
 dropout_aoa: 0.3
 
 label_smoothing: 0.2
-input_json: data/retinaresizetalk.json
-input_att_dir: data/retina_resize_att
-input_fc_dir: data/retina_resize_fc
-input_label_h5: data/retinaresizetalk_label.h5
+input_json: data/retinatinytalk.json
+input_att_dir: data/retina_resize_tiny_att
+input_fc_dir: data/retina_resize_tiny_fc
+input_label_h5: data/retinatinytalk_label.h5
 
 seq_per_img: 5
 batch_size: 10
@@ -28,10 +28,10 @@ input_encoding_size: 1024
 rnn_size: 1024
 learning_rate_decay_start: 0
 scheduled_sampling_start: 0
-save_checkpoint_every: 54317
-val_images_use: 15478
+save_checkpoint_every: 4290
+val_images_use: 1162
 language_eval: 1
-checkpoint_path: logs/retina_aoa
+checkpoint_path: logs/retina_tiny_aoa
 save_every_epoch: True
 save_history_ckpt: True
 

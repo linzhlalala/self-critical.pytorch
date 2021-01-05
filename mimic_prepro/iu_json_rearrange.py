@@ -30,7 +30,7 @@ def main(anno_file):
             new_list.append(study)
     print("convert totally:{} reports, {} images".format(len(report_list),count_id))
 
-    with open("..//iu_xray//dataset_iu.json","w") as output:
+    with open("../iu_xray/dataset_iu.json","w") as output:
         json.dump({"images":new_list,'dataset':"iu_xray"},output)
 
 if __name__ == '__main__':

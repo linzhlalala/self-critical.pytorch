@@ -9,7 +9,6 @@
 
 module load cuda
 export SC_LZH=/projects/ub62/imcaption/self-critical.pytorch
-python tools/train.py --cfg configs/iu_fc.yml --id fc 2>&1 | tee m3/train_fc.txt
 python tools/eval.py --input_json ../iu_xray/iu_talk.json \
 	--image_root ../iu_xray/images \
 	--input_label_h5 ../iu_xray/iu_label.h5 \

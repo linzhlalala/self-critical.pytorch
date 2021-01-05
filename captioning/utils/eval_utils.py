@@ -41,14 +41,14 @@ def getCOCO(dataset):
         annFile = 'coco-caption/annotations/captions_val2014.json'
     elif 'flickr30k' in dataset or 'f30k' in dataset:
         annFile = 'data/f30k_captions4eval.json'
-    elif 'mimicrm' in dataset:
-        annFile = 'data/mimicrm_eval.json'
     elif 'findings' in dataset:
         annFile = 'data/findings_4eval.json'
     elif 'mimic' in dataset:
         annFile = 'data/mimic_eval.json'
     elif 'iu_xray'  in dataset:
         annFile = '../iu_xray/iu_eval.json'
+    else:
+        annFile = dataset.replace('talk','eval')
     return COCO(annFile)
 
 
@@ -133,8 +133,6 @@ def language_eval(dataset, preds, preds_n, eval_kwargs, split):
         
     out['bad_count_rate'] = sum([count_bad(_['caption']) for _ in preds_filt]) / float(len(preds_filt))
     outfile_path = os.path.join('eval_results/', model_id + '_' + split + '.json')
-    # print(xxxxx)
-    print('split mode is', split)
     with open(outfile_path, 'w') as outfile:
         json.dump({'overall': out, 'imgToEval': imgToEval}, outfile)
 

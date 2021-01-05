@@ -79,6 +79,10 @@ def main(params):
             I = I[:,:,np.newaxis]
             I = np.concatenate((I,I,I), axis=2)
 
+        if (I.shape[2] == 4):
+            #for png ALPHA channel
+            I = skimage.color.rgba2rgb(I)
+
         I = I.astype('float32')/255.0
         I = torch.from_numpy(I.transpose([2,0,1])).cuda()
         I = preprocess(I)

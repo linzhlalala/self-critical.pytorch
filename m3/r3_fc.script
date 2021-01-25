@@ -1,0 +1,19 @@
+#!/bin/bash
+#SBATCH --job-name=r3_t&e_fc
+#SBATCH --account=ub63
+#SBATCH --gres=gpu:V100:8
+#SBATCH --partition=dgx
+#SBATCH --ntasks=1
+#SBATCH --time=24:00:00
+#SBATCH --mem-per-cpu=32768
+#SBATCH --qos=dgx
+
+module load cuda
+export SC_LZH=/projects/ub62/imcaption/self-critical.pytorch
+python tools/train.py --cfg configs/r3_fc.yml --id fc 2>&1 | tee m3/r3_train_fc.txt
+python tools/eval.py --input_json ../retina_wp/retina3_talk.json \
+	--image_root ../retina_wp/selected \
+	--input_label_h5 ../retina_wp/retina3_label.h5 \
+	--num_images -1 --model logs/r3_fc/model-best.pth \
+	--infos_path logs/r3_fc/infos_fc-best.pkl \
+	--language_eval 1 2>&1 | tee m3/r3_eval_fc.txt

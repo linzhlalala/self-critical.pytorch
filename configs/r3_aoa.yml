@@ -14,11 +14,11 @@ ctx_drop: 1
 dropout_aoa: 0.3
 
 label_smoothing: 0.2
-input_json: ../retina_wp/retina0_talk.json
-input_att_dir: ../retina_wp/retina0_att
-input_fc_dir: ../retina_wp/retina0_fc
-input_label_h5: ../retina_wp/retina0_label.h5
-checkpoint_path: logs/r0_aoa
+input_json: ../retina_wp/retina3_talk.json
+input_att_dir: ../retina_wp/retina1_att
+input_fc_dir: ../retina_wp/retina1_fc
+input_label_h5: ../retina_wp/retina3_label.h5
+checkpoint_path: logs/r3_aoa
 
 seq_per_img: 5
 batch_size: 10
@@ -30,12 +30,12 @@ rnn_size: 1024
 learning_rate_decay_start: 0
 scheduled_sampling_start: 0
 save_checkpoint_every: 1000
-val_images_use: 123918
+val_images_use: 11539
 language_eval: 1
 save_every_epoch: True
 save_history_ckpt: True
 
-max_epochs: 10
+max_epochs: 30
 max_length: 60
 scheduled_sampling_increase_every: 5
 scheduled_sampling_max_prob: 0.5

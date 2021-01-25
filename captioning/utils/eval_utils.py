@@ -106,10 +106,11 @@ def language_eval(dataset, preds, preds_n, eval_kwargs, split):
     out['entropy'] = mean_entropy
 
     imgToEval = cocoEval.imgToEval
-    for k in list(imgToEval.values())[0]['SPICE'].keys():
-        if k != 'All':
-            out['SPICE_'+k] = np.array([v['SPICE'][k]['f'] for v in imgToEval.values()])
-            out['SPICE_'+k] = (out['SPICE_'+k][out['SPICE_'+k]==out['SPICE_'+k]]).mean()
+    #don't SPICE for retina
+    #for k in list(imgToEval.values())[0]['SPICE'].keys():
+    #    if k != 'All':
+    #        out['SPICE_'+k] = np.array([v['SPICE'][k]['f'] for v in imgToEval.values()])
+    #        out['SPICE_'+k] = (out['SPICE_'+k][out['SPICE_'+k]==out['SPICE_'+k]]).mean()
     for p in preds_filt:
         image_id, caption = p['image_id'], p['caption']
         imgToEval[image_id]['caption'] = caption

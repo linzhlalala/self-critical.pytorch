@@ -1,9 +1,0 @@
-#!/bin/bash
-#SBATCH --job-name=retina_tryopen
-#SBATCH --account=ub62
-#SBATCH --ntasks=1
-#SBATCH --time=24:00:00
-#SBATCH --mem-per-cpu=16384
-
-python retina_translate/retina_arrange.py 2>&1 | tee m3/tryopen.txt
-

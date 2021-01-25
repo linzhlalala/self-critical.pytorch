@@ -320,7 +320,7 @@ class DataLoader:
                                                   pin_memory=True,
                                                   num_workers=0, # 4 is usually enough , #0 for windows  LINZH
                                                   collate_fn=partial(self.dataset.collate_func, split=split),
-                                                  drop_last=False)
+                                                  drop_last=True)
             self.iters[split] = iter(self.loaders[split])
 
     def get_batch(self, split):

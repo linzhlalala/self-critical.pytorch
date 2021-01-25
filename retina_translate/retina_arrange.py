@@ -13,8 +13,8 @@ def get_label():
 
 def main():
     #cut it
-    freport = "retina_translate/token_trans_reports.csv"
-    imgfolder = "../retina_resizev2/resize"
+    freport = "retina_translate/token_trans_reports_cleaned.csv"
+    imgfolder = "../retina_wp/selected"
     reportlist = pd.read_csv(freport)
     reportlist.fillna('',inplace=True)
 
@@ -68,8 +68,8 @@ def main():
     print("convert totally:{} reports, {} images".format(len(reportlist),count_id))
     print("train:{}, val:{}, test:{}".format(train_num,val_num,test_num))
     print("error file: {}".format(error_file_count))
-    with open("../retina_wp/dataset_retina0.json","w") as output:
-        json.dump({"images":new_list,'dataset':"retina0"},output)
+    with open("../retina_wp/dataset_retina3.json","w") as output:
+        json.dump({"images":new_list,'dataset':"retina3"},output)
 
 if __name__ == "__main__":
     main()

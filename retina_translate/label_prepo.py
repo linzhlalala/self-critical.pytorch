@@ -57,6 +57,11 @@ def cut():
     jieba.add_word('3.')
     jieba.add_word('4.')
     jieba.add_word('5.')
+    jieba.add_word('6.')
+    jieba.add_word('7.')
+    jieba.add_word('8.')
+    jieba.add_word('9.')
+    jieba.add_word('10.')
 
     
     words = []
@@ -382,15 +387,16 @@ def manual_fixing_tokens2():
 def tokenize_translate_cn2tk():
     #cut it
     freport = "label.xlsx"
+    black_list_txt = "black_list.txt"
     reportlist = pd.read_excel(freport)
     reportlist.fillna('',inplace=True)
+
+    with open('black_list.txt', 'r',encoding = 'utf-8') as tof:
+        black_list = [line.strip('\n') for line in tof.readlines()]
     
     jieba.load_userdict('dictwords.txt')
-    jieba.add_word('1.')
-    jieba.add_word('2.')
-    jieba.add_word('3.')
-    jieba.add_word('4.')
-    jieba.add_word('5.')
+    for word in black_list:
+        jieba.add_word(word)
     print("-loading index finish-")
 
     symbol_trans = {ord(f):ord(t) for f,t in zip(
@@ -445,18 +451,20 @@ def tokenize_translate_cn2tk():
         enFindings,enImpression = "",""
 
         for word in fdcut:
-            enFindings += trans_dict[word] + " "
+            if word not in black_list:
+                enFindings += trans_dict[word] + " "
         for word in impcut:
-            enImpression += trans_dict[word] + " "
+            if word not in black_list:
+                enImpression += trans_dict[word] + " "
 
         newlist.append({'id':id,
             'Findings': enFindings.rstrip(),
             'Impression': enImpression.rstrip(),
         })
     data = pd.DataFrame(newlist)
-    data.to_csv('token_trans_reports.csv',index=False)      
+    data.to_csv('token_trans_reports_cleaned.csv',index=False)      
     #save dict
-    with open('token_trans_dict.csv','w',encoding = 'utf-8',newline='') as dictfile: 
+    with open('token_trans_dict_cleaned.csv','w',encoding = 'utf-8',newline='') as dictfile: 
         writer = csv.writer(dictfile)
         for key, value in trans_dict.items():
             writer.writerow([key, value])
@@ -510,6 +518,6 @@ if __name__ == "__main__":
     #search_trans_second()
     #manual_fixing_dict()
     #rough_translate()
-    #tokenize_translate_cn2tk()
-    tokenize_translate_tk2cn()
+    tokenize_translate_cn2tk()
+    #tokenize_translate_tk2cn()
 

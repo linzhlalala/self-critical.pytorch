@@ -18,6 +18,7 @@ logs/log_mimic_tf/
 .ipynb_checkpoints/
 vis/vis.json
 m3/*.txt
+slurm*
 <<<<<<< HEAD
 __pycache__/
 =======

@@ -19,10 +19,6 @@ logs/log_mimic_tf/
 vis/vis.json
 m3/*.txt
 slurm*
-<<<<<<< HEAD
 __pycache__/
-=======
 *.pyc
 vis/imgs/*
->>>>>>> d5896a4125dedcaf574749c86ffa9e2057c6d660
->>>>>>> b03ddc8edc8cb876713e012a3693dd1fbdc1c5e4

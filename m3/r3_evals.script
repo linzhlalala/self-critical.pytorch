@@ -12,12 +12,7 @@ export SC_LZH=/projects/ub62/imcaption/self-critical.pytorch
 python tools/eval.py --input_json ../retina_wp/retina3_talk.json \
 	--image_root ../retina_wp/selected \
 	--input_label_h5 ../retina_wp/retina3_label.h5 \
-	--num_images -1 --model logs/r3_aoa/model-best.pth \
-	--infos_path logs/r3_aoa/infos_aoa-best.pkl \
-	--language_eval 1 2>&1 | tee m3/r3_eval_aoa.txt
-python tools/eval.py --input_json ../retina_wp/retina3_talk.json \
-	--image_root ../retina_wp/selected \
-	--input_label_h5 ../retina_wp/retina3_label.h5 \
-	--num_images -1 --model logs/r3_a2i2v2/model-best.pth \
-	--infos_path logs/r3_a2i2v2/infos_a2i2-best.pkl \
-	--language_eval 1 2>&1 | tee m3/r3_eval_a2i2v2.txt
+	--num_images -1 --model logs/r3_fc/model-best.pth \
+	--infos_path logs/r3_fc/infos_fc-best.pkl \
+	--language_eval 1 --max_length 60 2>&1 | tee m3/r3_eval_fc.txt
+

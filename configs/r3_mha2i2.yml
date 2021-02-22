@@ -1,0 +1,22 @@
+# base
+caption_model: mh_att2in2
+input_json: ../retina_wp/retina3_talk.json
+input_att_dir: ../retina_wp/retina1_att
+input_fc_dir: ../retina_wp/retina1_fc
+input_label_h5: ../retina_wp/retina3_label.h5
+
+learning_rate: 0.0005
+learning_rate_decay_start: 0
+scheduled_sampling_start: 0
+# checkpoint_path: $ckpt_path
+checkpoint_path: logs/r3_mha2i2
+# $start_from
+language_eval: 1
+val_images_use: -1
+save_every_epoch: True
+save_history_ckpt: True
+train_sample_n: 5
+self_critical_after: 30
+batch_size: 10
+max_epochs: 10
+max_length: 60

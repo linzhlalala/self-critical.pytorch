@@ -13,8 +13,8 @@ def get_label():
 
 def main():
     #cut it
-    freport = "retina_translate/token_trans_reports_cleaned.csv"
-    imgfolder = "../retina_wp/selected"
+    freport = "retina_translate/cn2tk_v2_report.csv"
+    imgfolder = "../retina_wp/select0.625"
     reportlist = pd.read_csv(freport)
     reportlist.fillna('',inplace=True)
 
@@ -41,11 +41,11 @@ def main():
         images= os.listdir(study_dir) 
         for image in images:
             image_file = os.path.join(study_dir,image)
-            try:
-                I = skimage.io.imread(image_file)
-            except:
-                error_file_count += 1
-                continue
+            #try:
+                #I = skimage.io.imread(image_file)
+            #except:
+                #error_file_count += 1
+                #continue
             record = {}
             record['filepath'] = id
             record['filename'] = image
@@ -67,9 +67,9 @@ def main():
             
     print("convert totally:{} reports, {} images".format(len(reportlist),count_id))
     print("train:{}, val:{}, test:{}".format(train_num,val_num,test_num))
-    print("error file: {}".format(error_file_count))
-    with open("../retina_wp/dataset_retina3.json","w") as output:
-        json.dump({"images":new_list,'dataset':"retina3"},output)
+    #print("error file: {}".format(error_file_count))
+    with open("dataset_retina5.json","w") as output:
+        json.dump({"images":new_list,'dataset':"retina5"},output)
 
 if __name__ == "__main__":
     main()

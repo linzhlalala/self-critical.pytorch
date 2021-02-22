@@ -61,7 +61,7 @@ class MeshedDecoder(Module):
         super(MeshedDecoder, self).__init__()
         self.d_model = d_model
         self.word_emb = nn.Embedding(vocab_size, d_model, padding_idx=padding_idx)
-        self.pos_emb = nn.Embedding.from_pretrained(sinusoid_encoding_table(max_len + 1, d_model, 0), freeze=True)
+        self.pos_emb = nn.Embedding.from_pretrained(sinusoid_encoding_table(max_len + 1, d_model, None), freeze=True)
         self.layers = ModuleList(
             [MeshedDecoderLayer(d_model, d_k, d_v, h, d_ff, dropout, self_att_module=self_att_module,
                                 enc_att_module=enc_att_module, self_att_module_kwargs=self_att_module_kwargs,
@@ -102,7 +102,12 @@ class MeshedDecoder(Module):
         input = input.clone().detach() # rtchange
         if self.padding_idx == -1:
             input[input == self.padding_idx] = 0 # rtchange
-        out = self.word_emb(input) + self.pos_emb(seq)
+        word_emb = self.word_emb(input)
+        pos_emb = self.pos_emb(seq)
+        
+        #print(pos_emb.shape)
+        #print(word_emb.shape)
+        out = word_emb + pos_emb
         for i, l in enumerate(self.layers):
             out = l(out, encoder_output, mask_queries, mask_self_attention, mask_encoder)
 

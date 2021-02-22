@@ -12,7 +12,7 @@ export SC_LZH=/projects/ub62/imcaption/self-critical.pytorch
 python tools/train.py --cfg configs/r3_aoa.yml --id aoa 2>&1 | tee m3/r3_train_aoa.txt
 python tools/eval.py --input_json ../retina_wp/retina3_talk.json \
 	--image_root ../retina_wp/selected \
-	--input_label_h5 ../retina_wp/retin3_label.h5 \
+	--input_label_h5 ../retina_wp/retina3_label.h5 \
 	--num_images -1 --model logs/r3_aoa/model-best.pth \
 	--infos_path logs/r3_aoa/infos_aoa-best.pkl \
 	--language_eval 1 2>&1 | tee m3/r3_eval_aoa.txt

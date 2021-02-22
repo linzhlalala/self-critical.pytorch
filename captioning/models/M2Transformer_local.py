@@ -33,18 +33,25 @@ from .TransformerModel import subsequent_mask, TransformerModel
 
 
 class M2TransformerModel_local(TransformerModel):
+    '''
+    encoder = MemoryAugmentedEncoder(3, 0, attention_module=ScaledDotProductAttentionMemory,
+                                     attention_module_kwargs={'m': args.m})
+    decoder = MeshedDecoder(len(text_field.vocab), 54, 3, text_field.vocab.stoi['<pad>'])
+    model = Transformer(text_field.vocab.stoi['<bos>'], encoder, decoder).to(device)
+    '''
 
-    def make_model(self, src_vocab, tgt_vocab, N_enc=6, N_dec=6, 
+    def make_model(self, src_vocab, tgt_vocab, N_enc=3, N_dec=3, 
                d_model=512, d_ff=2048, h=8, dropout=0.1):
         "Helper: Construct a model from hyperparameters."
-        N_enc = 3 #dh setting
+        N_enc,N_dec = 3,3 #dh setting
         encoder = MemoryAugmentedEncoder(N_enc, 0, attention_module=ScaledDotProductAttentionMemory,
                                         attention_module_kwargs={'m': 40})
-        # print('N_enc self critical', N_enc)
+        print('N_enc:', N_enc,',N_dec:', N_dec)
+        print('src_vocab:', src_vocab,',tgt_vocab:', tgt_vocab)
+        print('d_model:', d_model,',d_ff:', d_ff)
 
         # Another implementation is to use MultiLevelEncoder + att_embed
-        print('N_dec', N_dec)
-        decoder = MeshedDecoder(tgt_vocab, 54, N_dec, -1) # -1 is padding;
+        decoder = MeshedDecoder(tgt_vocab, 100, N_dec, -1) # -1 is padding;
         model = Transformer(0, encoder, decoder) # 0 is bos
         return model
 

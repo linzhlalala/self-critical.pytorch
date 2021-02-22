@@ -31,7 +31,7 @@ class Transformer(CaptioningModel):
         # print('seq', seq.size(), 'enc_output', enc_output.size(), 'mask_enc', mask_enc.size())
         dec_output = self.decoder(seq, enc_output, mask_enc)
         # print('dec_output', dec_output.size())
-        print('forward of Transformer Class')
+        #print('forward of Transformer Class')
         return dec_output
 
     def init_state(self, b_s, device):

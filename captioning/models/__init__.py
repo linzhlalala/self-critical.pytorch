@@ -17,6 +17,12 @@ from .cachedTransformer import TransformerModel as cachedTransformer
 from .BertCapModel import BertCapModel
 from .M2Transformer import M2TransformerModel
 from .AoAModel import AoAModel
+from .r2gen.encoder_decoder import EncoderDecoder as R2GenModel
+from .r2tf import r2tfModel
+from .AttTFModel import MhAtt2in2Model
+from .Augv3 import EncoderDecoderAugv3Abrm as Augv3Model
+
+
 
 
 def setup(opt):
@@ -71,6 +77,14 @@ def setup(opt):
         model = M2TransformerModel(opt)
     elif opt.caption_model == 'm2transformer_local':
         model = M2TransformerModel_local(opt)
+    elif opt.caption_model == 'r2gen':
+        model = R2GenModel(opt)
+    elif opt.caption_model == 'r2tf':
+        model = r2tfModel(opt)
+    elif opt.caption_model == 'mh_att2in2':
+        model = MhAtt2in2Model(opt)
+    elif opt.caption_model == 'augv3':
+        model = Augv3Model(opt)
     else:
         raise Exception("Caption model not supported: {}".format(opt.caption_model))
 

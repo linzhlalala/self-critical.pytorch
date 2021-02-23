@@ -9,16 +9,10 @@ data/*
 logs/*
 eval_results
 .idea/*
-logs/infos.csv
-log_m2tf/
-log_m2tfv11/
-log_m2tfv12/
-logs/24.txt
-logs/log_mimic_tf/
 .ipynb_checkpoints/
 vis/vis.json
 *.txt
 *.out
 __pycache__/
 *.pyc
-vis/imgs/*
+vis/*

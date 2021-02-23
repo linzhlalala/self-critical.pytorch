@@ -12,6 +12,7 @@ checkpoint_path: logs/r3_augv3
 language_eval: 1
 #save_checkpoint_every: 3000
 save_every_epoch: True
+save_history_ckpt: True
 val_images_use: -1
 
 train_sample_n: 5

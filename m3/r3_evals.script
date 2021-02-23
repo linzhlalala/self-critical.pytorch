@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=r3_evals
+#SBATCH --job-name=r3_re_evals
 #SBATCH --account=ub62
 #SBATCH --gres=gpu:V100:1
 #SBATCH --partition=m3g
@@ -12,7 +12,7 @@ export SC_LZH=/projects/ub62/imcaption/self-critical.pytorch
 python tools/eval.py --input_json ../retina_wp/retina3_talk.json \
 	--image_root ../retina_wp/selected \
 	--input_label_h5 ../retina_wp/retina3_label.h5 \
-	--num_images -1 --model logs/r3_fc/model-best.pth \
-	--infos_path logs/r3_fc/infos_fc-best.pkl \
-	--language_eval 1 --max_length 60 2>&1 | tee m3/r3_eval_fc.txt
+	--num_images -1 --model logs/r3_m2/model-1.pth \
+	--infos_path logs/r3_m2/infos_m2-1.pkl \
+	--language_eval 1 --max_length 60 2>&1 | tee m3/r3_reeval_m2.txt
 

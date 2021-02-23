@@ -17,8 +17,8 @@ logs/24.txt
 logs/log_mimic_tf/
 .ipynb_checkpoints/
 vis/vis.json
-m3/*.txt
-slurm*
+*.txt
+*.out
 __pycache__/
 *.pyc
 vis/imgs/*
